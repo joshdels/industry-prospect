@@ -1,0 +1,9 @@
+{% extends "inspector/_base.html" %}
+{% block content %}
+    <form method="post" class="container">
+        {% csrf_token %}
+        <h1>New Prospect</h1>
+        <textarea name="user_input" id="user-input" cols="20" rows="20"></textarea>
+        <button type="submit" class="btn ">Add Prospect</button>
+    </form>
+{% endblock content %}

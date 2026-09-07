@@ -1,0 +1,69 @@
+a {
+  text-decoration: none;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+  padding: 0 22px;
+
+  border: 1px solid var(--black);
+  background: var(--white);
+  color: var(--black);
+
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+/* Black Button */
+
+.btn-black {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.btn-black:hover {
+  background: #333;
+  border-color: #333;
+}
+
+.btn-gray {
+  background: var(--gray);
+  color: var(--black);
+  border-color: var(--border);
+}
+
+.btn-gray:hover {
+  background: #e9e9e9;
+}
+
+.block {
+  background: var(--black);
+  color: var(--white);
+  padding: 24px;
+}
+
+.box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 24px;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+}

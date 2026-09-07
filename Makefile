@@ -16,3 +16,11 @@ dev:
 
 install:
 	uv run mcp install app/server/server.py
+
+
+lint:
+	uv run djlint . --reformat
+
+
+celery:
+	celery -A config worker --loglevel=INFO --concurrency=1 --prefetch-multiplier=1 --max-tasks-per-child=2

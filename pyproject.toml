@@ -3,7 +3,13 @@ name = "industry-prospect"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
+    "celery>=5.6.3",
     "django>=6.1.1",
     "mcp[cli]>=2.1.1",
     "python-dotenv>=1.2.3",
+]
+
+[dependency-groups]
+dev = [
+    "djlint>=1.45.2",
 ]
