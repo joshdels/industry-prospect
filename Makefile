@@ -1,14 +1,18 @@
 .PHONY: run migrate
 
 run:
-	python manage.py runserver
+	uv run python manage.py runserver
 
 
 migrate:
-	python manage.py makemigrations
-	python manage.py migrate
-	python manage.py showmigrations
+	uv run python manage.py makemigrations
+	uv run python manage.py migrate
+	uv run python manage.py showmigrations
 	
+
+test:
+	uv run python manage.py test
+
 
 dev:
 	uv run mcp dev app/server/server.py
@@ -23,4 +27,4 @@ lint:
 
 
 celery:
-	celery -A config worker --loglevel=INFO --concurrency=1 --prefetch-multiplier=1 --max-tasks-per-child=2
+	uv run celery -A config worker --loglevel=INFO --concurrency=1 --prefetch-multiplier=1 --max-tasks-per-child=2
