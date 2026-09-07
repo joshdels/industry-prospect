@@ -5,9 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{% static 'inspector/css/_global.css' %}">
-        {% block title %}
-            <title></title>
-        {% endblock title %}
+        {% block link %} {% endblock link %}
+        {% block title %}<title>Industry Prospector</title>{% endblock title %}
     </head>
     <body>
         {% include "inspector/components/navbar.html" %}

@@ -1,7 +1,104 @@
 {% extends "inspector/_base.html" %}
+{% load static %}
+{% block link %} 
+    <link rel="stylesheet" href="{% static 'inspector/css/definition.css' %}"> 
+{% endblock link %}
 {% block content %}
-    <div class="container">
+
+<div class="container">
+
+    <div class="page-header">
         <h1>Prospect Information</h1>
-        <h2>{{ prospect.name }}</h2>
     </div>
+
+    <div class="prospect-info">
+
+        <section>
+            <h2>{{ prospect.name }}</h2>
+
+            {% if prospect.role %}
+                <p class="role">{{ prospect.role }}</p>
+            {% endif %}
+        </section>
+
+
+        <section class="info-section">
+
+            <div class="info-row">
+                <span class="label">Business</span>
+                <span>{{ prospect.business.name }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Industry</span>
+                <span>
+                    {% if prospect.business.industry %}
+                        {{ prospect.business.industry.name }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Tags</span>
+                <span class="tags">
+                    {% for tag in prospect.business.tags.all %}
+                        <span class="tag">{{ tag.name }}</span>
+                    {% empty %}
+                        —
+                    {% endfor %}
+                </span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Status</span>
+                <span>{{ prospect.get_status_display }}</span>
+            </div>
+
+            {% if prospect.linkedin_url %}
+                <div class="info-row">
+                    <span class="label">LinkedIn</span>
+                    <a href="{{ prospect.linkedin_url }}" target="_blank">
+                        View Profile
+                    </a>
+                </div>
+            {% endif %}
+
+        </section>
+
+
+        <section class="info-section">
+
+            <div class="info-row">
+                <span class="label">Discovery Target</span>
+                <span>{{ prospect.discovery_target|default:"—" }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Opening Question</span>
+                <span>{{ prospect.opening_question|default:"—" }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Outreach Message</span>
+                <span>{{ prospect.outreach_message|default:"—" }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Findings</span>
+                <span>{{ prospect.findings|default:"—" }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Notes</span>
+                <span>{{ prospect.notes|default:"—" }}</span>
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
 {% endblock %}

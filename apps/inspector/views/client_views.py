@@ -28,7 +28,6 @@ def prospect_detail(request, pk):
 
 
 def add_new_prospect(request):
-
     if request.method == "POST":
         user_input = request.POST.get("user_input", "").strip()
 
@@ -40,3 +39,11 @@ def add_new_prospect(request):
             return redirect("prospect_dashboard")
 
     return render(request, "inspector/new_prospect.html")
+
+
+def update_prospect_status(request, pk):
+    pass
+
+
+def update_prospect_findings_notes(request, pk):
+    pass
