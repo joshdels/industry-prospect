@@ -26,7 +26,12 @@ class ProspectInput(models.Model):
 
 
 class Industry(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+    )
+
     description = models.TextField(blank=True)
 
     def __str__(self):
@@ -34,14 +39,20 @@ class Industry(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+    )
 
     def __str__(self):
         return self.name
 
 
 class Business(models.Model):
+
     name = models.CharField(max_length=255)
+
     website = models.URLField(blank=True)
 
     industry = models.ForeignKey(
@@ -49,13 +60,13 @@ class Business(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name="business",
+        related_name="businesses",
     )
 
     tags = models.ManyToManyField(
         Tag,
         blank=True,
-        related_name="business",
+        related_name="businesses",
     )
 
     def __str__(self):
@@ -63,6 +74,7 @@ class Business(models.Model):
 
 
 class Prospect(models.Model):
+
     class Status(models.TextChoices):
         NEW = "new", "New"
         CONTACTED = "contacted", "Contacted"
@@ -76,19 +88,69 @@ class Prospect(models.Model):
     )
 
     name = models.CharField(max_length=255)
-    role = models.CharField(max_length=255, blank=True)
+
+    role = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+
     profile_url = models.URLField(blank=True)
 
-    # LinkedIn information
-    profile_text = models.TextField()
+    # LinkedIn / profile information
+    profile_text = models.TextField(blank=True)
 
-    # AI-generated discovery preparation
-    discovery_target = models.TextField(blank=True)
-    opening_question = models.TextField(blank=True)
-    outreach_message = models.TextField(blank=True)
+    # --------------------------------------------------
+    # AI-GENERATED DISCOVERY PREPARATION
+    # --------------------------------------------------
 
-    # Most important: what you actually learned
-    findings = models.TextField(blank=True)
+    discovery_target = models.TextField(
+        blank=True,
+        help_text="What we want to learn from this prospect.",
+    )
+
+    opening_question = models.TextField(
+        blank=True,
+        help_text="The initial question used to start discovery.",
+    )
+
+    big_3_questions = models.JSONField(
+        default=list,
+        blank=True,
+        help_text=(
+            "Three Mom Test-style questions for digging into "
+            "the prospect's real workflow and problems."
+        ),
+    )
+
+    outreach_message = models.TextField(
+        blank=True,
+        help_text="AI-generated outreach message.",
+    )
+
+    research_notes = models.TextField(
+        blank=True,
+        help_text=(
+            "AI research and hypotheses. "
+            "Not confirmed customer findings."
+        ),
+    )
+
+    # --------------------------------------------------
+    # HUMAN / ACTUAL DISCOVERY
+    # --------------------------------------------------
+
+    findings = models.TextField(
+        blank=True,
+        help_text=(
+            "What was actually learned from talking "
+            "to the prospect."
+        ),
+    )
+
+    notes = models.TextField(
+        blank=True,
+        help_text="Additional manual notes.",
+    )
 
     status = models.CharField(
         max_length=20,
@@ -96,10 +158,10 @@ class Prospect(models.Model):
         default=Status.NEW,
     )
 
-    notes = models.TextField(blank=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
+
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+

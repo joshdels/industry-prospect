@@ -9,12 +9,14 @@
             <h1>Prospect Information</h1>
         </div>
         <div class="prospect-info">
+            <!-- BASIC INFORMATION -->
             <section>
                 <h2>{{ prospect.name }}</h2>
                 {% if prospect.role %}
                     <p class="role">{{ prospect.role }}</p>
                 {% endif %}
             </section>
+            <!-- BUSINESS INFORMATION -->
             <section class="info-section">
                 <div class="info-row">
                     <span class="label">Business</span>
@@ -44,14 +46,18 @@
                     <span class="label">Status</span>
                     <span>{{ prospect.get_status_display }}</span>
                 </div>
-                {% if prospect.linkedin_url %}
+                {% if prospect.profile_url %}
                     <div class="info-row">
-                        <span class="label">LinkedIn</span>
-                        <a href="{{ prospect.linkedin_url }}" target="_blank">View Profile</a>
+                        <span class="label">Profile</span>
+                        <a href="{{ prospect.profile_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer">View Profile</a>
                     </div>
                 {% endif %}
             </section>
+            <!-- AI DISCOVERY PREPARATION -->
             <section class="info-section">
+                <h3>Discovery Preparation</h3>
                 <div class="info-row">
                     <span class="label">Discovery Target</span>
                     <span>{{ prospect.discovery_target|default:"—" }}</span>
@@ -61,16 +67,42 @@
                     <span>{{ prospect.opening_question|default:"—" }}</span>
                 </div>
                 <div class="info-row">
+                    <span class="label">Big 3 Questions</span>
+                    <span>
+                        {% if prospect.big_3_questions %}
+                            <ol>
+                                {% for question in prospect.big_3_questions %}
+                                    <li>{{ question }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% else %}
+                            —
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="info-row">
                     <span class="label">Outreach Message</span>
                     <span>{{ prospect.outreach_message|default:"—" }}</span>
                 </div>
+            </section>
+            <!-- AI RESEARCH -->
+            <section class="info-section">
+                <h3>Research Notes</h3>
+                <div class="info-row">
+                    <span class="label">AI Research</span>
+                    <span>{{ prospect.research_notes|default:"—"|linebreaksbr }}</span>
+                </div>
+            </section>
+            <!-- HUMAN DISCOVERY -->
+            <section class="info-section">
+                <h3>Actual Discovery</h3>
                 <div class="info-row">
                     <span class="label">Findings</span>
-                    <span>{{ prospect.findings|default:"—" }}</span>
+                    <span>{{ prospect.findings|default:"No findings recorded yet."|linebreaksbr }}</span>
                 </div>
                 <div class="info-row">
                     <span class="label">Notes</span>
-                    <span>{{ prospect.notes|default:"—" }}</span>
+                    <span>{{ prospect.notes|default:"—"|linebreaksbr }}</span>
                 </div>
             </section>
         </div>

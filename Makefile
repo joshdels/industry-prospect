@@ -15,11 +15,16 @@ test:
 
 
 dev:
-	uv run mcp dev app/server/server.py
-
+	uv run mcp dev apps/mcp/server.py
 
 install:
-	uv run mcp install app/server/server.py
+	uv run mcp install apps/mcp/server.py \
+		--with django \
+		--with celery \
+		--with python-dotenv
+
+kill:
+	pkill -f claude
 
 
 lint:

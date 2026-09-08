@@ -1,7 +1,17 @@
 import os
+import sys
+
+from pathlib import Path
+
 import django
 
-from mcp.server.fastmcp import FastMCP
+# ============================================================
+# DJANGO SETUP
+# ============================================================
+
+BASE_DIR = Path(__file__).resolve().parents[2]
+
+sys.path.insert(0, str(BASE_DIR))
 
 os.environ.setdefault(
     "DJANGO_SETTINGS_MODULE",
@@ -10,16 +20,14 @@ os.environ.setdefault(
 
 django.setup()
 
-mcp = FastMCP("Prospect Inspector")
 
 
-# services from tje inspector, i add ni later josh
-@mcp.tool()
-def create_prospect(content: str) -> dict:
-    """Create a new prospect input"""
+from mcp.server import MCPServer
 
-    return
+from apps.mcp.tools import (
+    register_prospect_tools,
+)
 
+mcp = MCPServer("Prospect Assistant")
 
-if __name__ == "__main__":
-    mcp.run()
+register_prospect_tools(mcp)

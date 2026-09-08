@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from apps.inspector.models import Prospect, ProspectInput
-from apps.inspector.service import get_pending_inputs, process_pending_inputs
 
 
 def prospect_dashboard(request):
     prospects = Prospect.objects.all()
 
-    context = {"prospects": prospects}
+    context = {
+        "prospects": prospects,
+    }
 
     return render(
         request,
@@ -17,9 +18,14 @@ def prospect_dashboard(request):
 
 
 def prospect_detail(request, pk):
-    prospect = get_object_or_404(Prospect, pk=pk)
+    prospect = get_object_or_404(
+        Prospect,
+        pk=pk,
+    )
 
-    context = {"prospect": prospect}
+    context = {
+        "prospect": prospect,
+    }
 
     return render(
         request,
@@ -30,8 +36,15 @@ def prospect_detail(request, pk):
 
 def add_new_prospect(request):
     if request.method == "POST":
-        user_input = request.POST.get("user-input", "").strip()
-        profile_link = request.POST.get("profile-link")
+        user_input = request.POST.get(
+            "user-input",
+            "",
+        ).strip()
+
+        profile_link = request.POST.get(
+            "profile-link",
+            "",
+        ).strip()
 
         if user_input and profile_link:
             ProspectInput.objects.create(
@@ -39,11 +52,12 @@ def add_new_prospect(request):
                 profile_url=profile_link,
             )
 
-            process_pending_inputs()
-
             return redirect("prospect_dashboard")
 
-    return render(request, "inspector/new_prospect.html")
+    return render(
+        request,
+        "inspector/new_prospect.html",
+    )
 
 
 def update_prospect_status(request, pk):
