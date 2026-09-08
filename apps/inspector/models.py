@@ -11,6 +11,8 @@ class ProspectInput(models.Model):
 
     content = models.TextField()
 
+    profile_url = models.URLField(blank=True)
+
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
@@ -75,7 +77,7 @@ class Prospect(models.Model):
 
     name = models.CharField(max_length=255)
     role = models.CharField(max_length=255, blank=True)
-    linkedin_url = models.URLField(blank=True)
+    profile_url = models.URLField(blank=True)
 
     # LinkedIn information
     profile_text = models.TextField()

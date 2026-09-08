@@ -3,7 +3,11 @@
     <form method="post" class="container">
         {% csrf_token %}
         <h1>New Prospect</h1>
-        <textarea name="user_input" id="user-input" cols="20" rows="20"></textarea>
+        <label for="">
+            Profile Link
+            <input type="text" name="profile-link">
+        </label>
+        <textarea name="user-input" id="user-input" cols="20" rows="20" required></textarea>
         <button type="submit" class="btn">Add Prospect</button>
     </form>
 {% endblock content %}

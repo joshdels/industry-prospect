@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from apps.inspector.models import Prospect, ProspectInput
+from apps.inspector.service import get_pending_inputs, process_pending_inputs
 
 
-def prospect_dashbaord(request):
+def prospect_dashboard(request):
     prospects = Prospect.objects.all()
 
     context = {"prospects": prospects}
@@ -29,12 +30,16 @@ def prospect_detail(request, pk):
 
 def add_new_prospect(request):
     if request.method == "POST":
-        user_input = request.POST.get("user_input", "").strip()
+        user_input = request.POST.get("user-input", "").strip()
+        profile_link = request.POST.get("profile-link")
 
-        if user_input:
+        if user_input and profile_link:
             ProspectInput.objects.create(
                 content=user_input,
+                profile_url=profile_link,
             )
+
+            process_pending_inputs()
 
             return redirect("prospect_dashboard")
 
