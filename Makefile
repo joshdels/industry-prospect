@@ -20,7 +20,8 @@ dev:
 install:
 	uv run mcp install apps/mcp/server.py \
 		--with django \
-		--with celery \
+		--with dj-database-url \
+		--with psycopg[binary] \
 		--with python-dotenv
 
 kill:
