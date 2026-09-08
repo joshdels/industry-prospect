@@ -2,6 +2,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
+  table-layout: auto;
 }
 
 thead th {
@@ -36,4 +37,8 @@ td span {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.table-cursor {
+  cursor: pointer;
 }

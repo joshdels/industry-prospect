@@ -1,0 +1,38 @@
+{% extends "inspector/_base.html" %}
+{% block content %}
+<form method="post" action="{% url 'update_prospect' prospect.pk %}" class="container">
+    {% csrf_token %}
+
+    <h1>Update "{{ prospect.name }}" </h1>
+
+    <label for="">Status</label>
+
+    <select name="status">
+        {% for value, label in prospect.Status.choices %}
+            <option
+                value="{{ value }}"
+                {% if prospect.status == value %}selected{% endif %}
+            >
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label for="">Findings</label>
+
+    <textarea
+        name="findings"
+        placeholder="What did you actually learn?"
+    >{{ prospect.findings }}</textarea>
+
+    <label for="">Notes</label>
+
+    <textarea
+        name="notes"
+        placeholder="Additional notes..."
+    >{{ prospect.notes }}</textarea>
+
+
+    <button type="submit" class="btn">Save</button>
+</form>
+{% endblock content %}

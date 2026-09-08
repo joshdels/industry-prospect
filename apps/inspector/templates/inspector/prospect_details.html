@@ -10,11 +10,14 @@
         </div>
         <div class="prospect-info">
             <!-- BASIC INFORMATION -->
-            <section>
-                <h2>{{ prospect.name }}</h2>
-                {% if prospect.role %}
-                    <p class="role">{{ prospect.role }}</p>
-                {% endif %}
+            <section class="definition-header">
+                <div>
+                    <h2>{{ prospect.name }}</h2>
+                    {% if prospect.role %}
+                        <p class="role">{{ prospect.role }}</p>
+                    {% endif %}
+                </div>
+                <a href="{% url 'update_prospect' prospect.pk  %}" class="btn">Update</a>
             </section>
             <!-- BUSINESS INFORMATION -->
             <section class="info-section">

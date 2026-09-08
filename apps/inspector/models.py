@@ -80,6 +80,8 @@ class Prospect(models.Model):
         CONTACTED = "contacted", "Contacted"
         REPLIED = "replied", "Replied"
         LEARNED = "learned", "Learned"
+        GHOSTED = "ghosted", "Ghosted"
+        WEAK_INFORMANT = "weak informat", "Weak Informant"
 
     business = models.ForeignKey(
         Business,
@@ -129,10 +131,7 @@ class Prospect(models.Model):
 
     research_notes = models.TextField(
         blank=True,
-        help_text=(
-            "AI research and hypotheses. "
-            "Not confirmed customer findings."
-        ),
+        help_text=("AI research and hypotheses. " "Not confirmed customer findings."),
     )
 
     # --------------------------------------------------
@@ -141,10 +140,7 @@ class Prospect(models.Model):
 
     findings = models.TextField(
         blank=True,
-        help_text=(
-            "What was actually learned from talking "
-            "to the prospect."
-        ),
+        help_text=("What was actually learned from talking " "to the prospect."),
     )
 
     notes = models.TextField(
@@ -164,4 +160,3 @@ class Prospect(models.Model):
 
     def __str__(self):
         return self.name
-

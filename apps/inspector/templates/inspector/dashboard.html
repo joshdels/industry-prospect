@@ -9,21 +9,37 @@
                     <th>Industry</th>
                     <th>Tags</th>
                     <th>Status</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {% for prospect in prospects %}
-                    <tr>
+                    <tr
+                        onclick="window.location='{% url 'prospect_detail' prospect.id %}'"
+                        class="table-cursor"
+                    >
                         <td>
-                            <a href="{% url 'prospect_detail' prospect.id %}">{{ prospect.name }}</a>
+                            {{ prospect.name }}
                         </td>
-                        <td>{% if prospect.business.industry %} {{ prospect.business.industry.name }} {% else %} — {% endif %}</td>
+
+                        <td>
+                            {% if prospect.business.industry %}
+                                {{ prospect.business.industry.name }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+
                         <td>
                             {% for tag in prospect.business.tags.all %}
-                                <span class="tag">{{ tag.name }}</span> {% empty %} — {% endfor %}
+                                <span class="tag">{{ tag.name }}</span>
+                            {% empty %}
+                                —
+                            {% endfor %}
                         </td>
-                        <td>{{ prospect.status }}</td>
+
+                        <td>
+                            {{ prospect.status }}
+                        </td>
                     </tr>
                 {% empty %}
                     <tr>

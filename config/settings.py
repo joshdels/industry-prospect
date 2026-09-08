@@ -102,9 +102,3 @@ MAILERS = {
         "BACKEND": "django.core.mail.backends.console.EmailBackend",
     },
 }
-
-# --------------------------
-# CELERY
-# --------------------------
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND")

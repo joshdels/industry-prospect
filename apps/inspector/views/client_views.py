@@ -60,9 +60,39 @@ def add_new_prospect(request):
     )
 
 
-def update_prospect_status(request, pk):
-    pass
+def update_prospect(request, pk):
+    prospect = get_object_or_404(
+        Prospect,
+        pk=pk,
+    )
 
+    if request.method == "POST":
+        prospect.findings = request.POST.get(
+            "findings",
+            "",
+        ).strip()
 
-def update_prospect_findings_notes(request, pk):
-    pass
+        prospect.notes = request.POST.get(
+            "notes",
+            "",
+        ).strip()
+
+        status = request.POST.get("status")
+
+        if status in Prospect.Status.values:
+            prospect.status = status
+
+        prospect.save()
+
+        return redirect(
+            "prospect_detail",
+            pk=prospect.pk,
+        )
+
+    return render(
+        request,
+        "inspector/update_prospect.html",
+        {
+            "prospect": prospect,
+        },
+    )
