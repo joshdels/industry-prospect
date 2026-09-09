@@ -1,13 +1,31 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
+
 
 from apps.inspector.models import Prospect, ProspectInput
+from apps.inspector.selectors import get_prospect_dashboard_queryset
 
 
 def prospect_dashboard(request):
-    prospects = Prospect.objects.all()
+    search = request.GET.get("search", "").strip()
+    status = request.GET.get("status", "").strip()
+
+    prospects = get_prospect_dashboard_queryset(
+        search=search,
+        status=status,
+    )
+
+    paginator = Paginator(prospects, 25)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     context = {
-        "prospects": prospects,
+        "page_obj": page_obj,
+        "prospects": page_obj,
+        "search": search,
+        "status": status,
+        "status_choices": Prospect.Status.choices,
     }
 
     return render(

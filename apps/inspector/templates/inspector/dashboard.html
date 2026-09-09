@@ -1,7 +1,38 @@
 {% extends "inspector/_base.html" %}
+{% load static %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'inspector/css/dashboard.css' %}">
+{% endblock link %}
+
 {% block content %}
     <div class="container">
         <h1>Prospect List</h1>
+
+        <form method="get" class="filters">
+            <input
+                type="search"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search prospects..."
+            >
+
+            <select name="status">
+                <option value="">All</option>
+
+                {% for value, label in status_choices %}
+                    <option
+                        value="{{ value }}"
+                        {% if status == value %}selected{% endif %}
+                    >
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="btn">Search</button>
+        </form>
+
         <table>
             <thead>
                 <tr>
@@ -11,6 +42,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% for prospect in prospects %}
                     <tr
@@ -43,10 +75,32 @@
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="5">No prospects yet.</td>
+                        <td colspan="4">No prospects yet.</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        {% if page_obj.has_other_pages %}
+            <div class="pagination">
+
+                {% if page_obj.has_previous %}
+                    <a href="?search={{ search }}&page={{ page_obj.previous_page_number }}">
+                        Previous
+                    </a>
+                {% endif %}
+
+                <span>
+                    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?search={{ search }}&page={{ page_obj.next_page_number }}">
+                        Next
+                    </a>
+                {% endif %}
+
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
